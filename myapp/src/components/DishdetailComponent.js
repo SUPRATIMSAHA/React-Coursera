@@ -16,7 +16,7 @@ class DishDetail extends Component{
         );
     }
 
-    renderComments(comments){
+    renderComments(comments, addComment, dishId){
         if(comments != null){
             var commentList = comments.map((comment) => {
                 return (
@@ -30,7 +30,7 @@ class DishDetail extends Component{
                 <div>
                   <h4>Comments</h4>
                   <ul className="list-unstyled">{commentList}</ul>
-                  <CommentForm />
+                  <CommentForm dishId={dishId} addComment={addComment} />
                 </div>
               );
         }
@@ -60,7 +60,7 @@ class DishDetail extends Component{
                             {this.renderDish(this.props.dish)}
                         </div>
                         <div className="col-12 col-md-5 m-1">
-                            {this.renderComments(this.props.comments)}
+                            {this.renderComments(this.props.comments, this.props.addComment, this.props.dish.id)}
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values){
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render(){
@@ -118,8 +117,8 @@ class CommentForm extends Component {
                                 </Control.select>
                             </Row>
                             <Row className="form-group">
-                                <Label htmlFor="name">Your Name</Label>
-                                <Control.text model=".name" id="name" name="name" placeholder="Your Name" className="form-control" validators={{ minLength: minLength(3), maxLength: maxLength(15) }} />
+                                <Label htmlFor="author">Your Name</Label>
+                                <Control.text model=".author" id="author" name="name" placeholder="Your Name" className="form-control" validators={{ minLength: minLength(3), maxLength: maxLength(15) }} />
                                 <Errors
                                     className="text-danger"
                                     model=".name"
