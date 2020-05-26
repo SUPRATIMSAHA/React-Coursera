@@ -18,7 +18,7 @@ class DishDetail extends Component{
         );
     }
 
-    renderComments(comments, addComment, dishId){
+    renderComments(comments, postComment, dishId){
         if(comments != null){
             var commentList = comments.map((comment) => {
                 return (
@@ -32,7 +32,7 @@ class DishDetail extends Component{
                 <div>
                   <h4>Comments</h4>
                   <ul className="list-unstyled">{commentList}</ul>
-                  <CommentForm dishId={dishId} addComment={addComment} />
+                  <CommentForm dishId={dishId} postComment={postComment} />
                 </div>
               );
         }
@@ -80,7 +80,7 @@ class DishDetail extends Component{
                             {this.renderDish(this.props.dish)}
                         </div>
                         <div className="col-12 col-md-5 m-1">
-                            {this.renderComments(this.props.comments, this.props.addComment, this.props.dish.id)}
+                            {this.renderComments(this.props.comments, this.props.postComment, this.props.dish.id)}
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@ class CommentForm extends Component {
     }
 
     handleSubmit(values){
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     render(){
