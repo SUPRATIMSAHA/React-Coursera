@@ -1,27 +1,31 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
+import { Fade, Stagger } from 'react-animation-components';
 
 function RenderLeader({item}){
     return(
-        <div key={item.id} className="col-12 mt-5">
-            <Media tag="li">
-                <Media left middle>
-                    <Media object src={item.image} alt={item.name} />
+        <Fade in>
+            <div key={item.id} className="col-12 mt-5">
+                <Media tag="li">
+                    <Media left middle>
+                        <Media object src={baseUrl + item.image} alt={item.name} />
+                    </Media>
+                    <Media body className="ml-5">
+                        <Media heading>{item.name}</Media>
+                        <h6>{item.designation}</h6>
+                        <p className="mt-4">{item.description}</p>
+                    </Media>
                 </Media>
-                <Media body className="ml-5">
-                    <Media heading>{item.name}</Media>
-                    <h6>{item.designation}</h6>
-                    <p className="mt-4">{item.description}</p>
-                </Media>
-            </Media>
-        </div>
+            </div>
+        </Fade>
     );
 }
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    const leaders = props.leaders.leaders.map((leader) => {
         return (
             <RenderLeader key={leader.id} item={leader} />
         );
@@ -37,7 +41,7 @@ function About(props) {
                 <div className="col-12">
                     <h3>About Us</h3>
                     <hr />
-                </div>                
+                </div>
             </div>
             <div className="row row-content">
                 <div className="col-12 col-md-6">
@@ -83,7 +87,9 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        <Stagger in>
+                            {leaders}
+                        </Stagger>
                     </Media>
                 </div>
             </div>
